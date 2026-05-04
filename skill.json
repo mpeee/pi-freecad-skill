@@ -1,0 +1,159 @@
+{
+  "name": "pi-freecad-skill",
+  "version": "0.1.0",
+  "description": "A Pi AI skill that allows remote control of FreeCAD via a REST API.",
+  "author": "mpeee",
+  "license": "MIT",
+  "entrypoint": "server.py",
+  "transport": "http",
+  "base_url": "http://127.0.0.1:5000",
+  "capabilities": [
+    {
+      "id": "health_check",
+      "description": "Check whether the skill server is running.",
+      "method": "GET",
+      "path": "/health"
+    },
+    {
+      "id": "skill_info",
+      "description": "Return metadata about the skill and its available endpoints.",
+      "method": "GET",
+      "path": "/info"
+    },
+    {
+      "id": "get_document",
+      "description": "Return the current FreeCAD document state including all objects.",
+      "method": "GET",
+      "path": "/document"
+    },
+    {
+      "id": "reset_document",
+      "description": "Clear the current FreeCAD document and start fresh.",
+      "method": "POST",
+      "path": "/document/reset",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "description": "Name for the new document.",
+          "default": "Prototype"
+        }
+      }
+    },
+    {
+      "id": "list_objects",
+      "description": "List all objects currently in the FreeCAD document.",
+      "method": "GET",
+      "path": "/objects"
+    },
+    {
+      "id": "create_box",
+      "description": "Create a rectangular box (cuboid) in FreeCAD.",
+      "method": "POST",
+      "path": "/objects/box",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "description": "Name for the new object.",
+          "default": "Box"
+        },
+        "length": {
+          "type": "number",
+          "description": "Length of the box in mm.",
+          "default": 10.0
+        },
+        "width": {
+          "type": "number",
+          "description": "Width of the box in mm.",
+          "default": 10.0
+        },
+        "height": {
+          "type": "number",
+          "description": "Height of the box in mm.",
+          "default": 10.0
+        }
+      }
+    },
+    {
+      "id": "create_sphere",
+      "description": "Create a sphere in FreeCAD.",
+      "method": "POST",
+      "path": "/objects/sphere",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "description": "Name for the new object.",
+          "default": "Sphere"
+        },
+        "radius": {
+          "type": "number",
+          "description": "Radius of the sphere in mm.",
+          "default": 5.0
+        }
+      }
+    },
+    {
+      "id": "create_cylinder",
+      "description": "Create a cylinder in FreeCAD.",
+      "method": "POST",
+      "path": "/objects/cylinder",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "description": "Name for the new object.",
+          "default": "Cylinder"
+        },
+        "radius": {
+          "type": "number",
+          "description": "Radius of the cylinder in mm.",
+          "default": 5.0
+        },
+        "height": {
+          "type": "number",
+          "description": "Height of the cylinder in mm.",
+          "default": 10.0
+        }
+      }
+    },
+    {
+      "id": "create_cone",
+      "description": "Create a cone in FreeCAD.",
+      "method": "POST",
+      "path": "/objects/cone",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "description": "Name for the new object.",
+          "default": "Cone"
+        },
+        "radius1": {
+          "type": "number",
+          "description": "Base radius of the cone in mm.",
+          "default": 5.0
+        },
+        "radius2": {
+          "type": "number",
+          "description": "Top radius of the cone in mm (0 = pointed tip).",
+          "default": 0.0
+        },
+        "height": {
+          "type": "number",
+          "description": "Height of the cone in mm.",
+          "default": 10.0
+        }
+      }
+    },
+    {
+      "id": "delete_object",
+      "description": "Remove a named object from the FreeCAD document.",
+      "method": "DELETE",
+      "path": "/objects/{name}",
+      "parameters": {
+        "name": {
+          "type": "string",
+          "description": "Name of the object to delete.",
+          "required": true
+        }
+      }
+    }
+  ]
+}
