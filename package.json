@@ -1,0 +1,15 @@
+{
+  "name": "freecad-skill",
+  "version": "0.1.0",
+  "description": "Pi package: control a running FreeCAD instance with natural language (tools + skills + knowledge base)",
+  "keywords": ["pi-package"],
+  "license": "MIT",
+  "peerDependencies": {
+    "@mariozechner/pi-coding-agent": "*",
+    "typebox": "*"
+  },
+  "pi": {
+    "extensions": ["./.pi/extensions/freecad.ts"],
+    "skills": ["./.pi/skills"]
+  }
+}
