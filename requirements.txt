@@ -1,0 +1,6 @@
+# No third-party runtime dependencies – the server uses Python's stdlib only.
+# List packages here if you extend the skill with additional features.
+
+# Optional: install these for richer development tooling
+# pytest>=8.0
+# ruff>=0.4
