@@ -121,8 +121,9 @@ freecad-skill/
 │           ├── 10-remote-execution.md  Execution context, error handling
 │           └── 11-sketcher-python.md   Sketcher constraint API reference
 │
-├── fc-scripts/                     # Project-local script library (auto-created)
-│   └── _index.json
+├── fc-scripts/                     # Project-local script library (tracked examples)
+│   ├── _index.json
+│   └── nopscadlib_bridge.py        # OpenSCAD / NopSCADlib render-import helper
 │
 ├── server/freecad_server.py        # Standalone copy of the macro (original)
 ├── cli/fc.py                       # Standalone CLI (original)
@@ -147,6 +148,13 @@ Once the skill is loaded, the agent has these tools:
 | `freecad_script_delete` | Remove a script from the library |
 
 ### Script Library
+
+This repository ships one ready-to-run helper script:
+
+| Script | Purpose |
+|--------|---------|
+| `nopscadlib_bridge` | Render NopSCADlib or plain OpenSCAD via the OpenSCAD CLI and import into FreeCAD |
+
 
 Scripts are stored in two scopes:
 
@@ -195,6 +203,49 @@ python3 .pi/skills/freecad-remote/cli/fc.py run "App.ActiveDocument.Name"
 ```
 
 ---
+
+## NopSCADlib Integration
+
+You can now use NopSCADlib as an external geometry source for the FreeCAD skill.
+
+### Setup
+
+1. Install **OpenSCAD** on Windows
+2. Clone **NopSCADlib** locally, for example:
+   ```bash
+   git clone https://github.com/nophead/NopSCADlib vendor/NopSCADlib
+   ```
+3. Start FreeCAD and connect the skill as usual
+4. In pi, load the helper once:
+   - `freecad_script_run(name="nopscadlib_bridge")`
+5. Then call from `freecad_run`:
+   ```python
+   check_nopscadlib_setup()
+   render_nopscadlib(
+       name="ExamplePart",
+       scad_body='''
+   difference() {
+       cylinder(h = 14, r = 15, $fn = 96);
+       translate([0,0,-1]) cylinder(h = 16, r = 11, $fn = 96);
+   }
+   '''
+   )
+   ```
+
+### Detection rules
+
+The helper looks for:
+- `OPENSCAD_EXE`
+- `NOPSCADLIB_DIR`
+- `./vendor/NopSCADlib`
+- `./NopSCADlib`
+- common Windows OpenSCAD install paths
+
+### Notes
+
+- `import_mode="shape"` is best if you want measurements, Booleans, or export from FreeCAD
+- `import_mode="mesh"` is the fallback for difficult STL conversions
+- Keep the SCAD source as the master model; imported geometry is generated output
 
 ## Troubleshooting
 

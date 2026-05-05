@@ -124,8 +124,9 @@ import Sketcher
 1. `/freecad:status` — verify connection
 2. `freecad_run` with inspection code — understand current document state
 3. `freecad_run` or `freecad_script_run` — create / modify geometry
-4. `freecad_screenshot` — visual verification
-5. `freecad_script_save` — persist any script worth keeping
+4. For OpenSCAD / NopSCADlib workflows: load `nopscadlib_bridge` from the script library, render via OpenSCAD, then inspect imported geometry
+5. `freecad_screenshot` — visual verification
+6. `freecad_script_save` — persist any script worth keeping
 
 ## FreeCAD Python API Essentials
 
@@ -181,6 +182,7 @@ experience-based patterns, known API traps, workflow recipes validated against
 | File | Load when… |
 |------|-----------|
 | [references/14-dsl-generator.md](references/14-dsl-generator.md) | **Always load first** — DSL/JSON approach avoids Sketcher complexity; LLM outputs JSON, generator builds the model |
+| [references/15-openscad-nopscadlib.md](references/15-openscad-nopscadlib.md) | OpenSCAD / NopSCADlib workflow: library detection, render/import bridge, when mesh-vs-shape is acceptable |
 | [references/00-decision-guide.md](references/00-decision-guide.md) | Planning which approach to use, or exploring an existing document for the first time |
 | [references/08-robustness.md](references/08-robustness.md) | Model breaks, Boolean failures, Topological Naming Problem, validating shapes |
 | [references/10-remote-execution.md](references/10-remote-execution.md) | Execution context, error handling, screenshot workflow, stateful sessions, WSL2 connection troubleshooting |
